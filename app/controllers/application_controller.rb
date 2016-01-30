@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
 	user_signed_in? ? current_user.id : 'Guest'
   end
 
+  def after_sign_in_path_for(resource)
+    current_user_path  
+  end
+
 private
  
   def mailbox

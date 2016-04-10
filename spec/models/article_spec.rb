@@ -9,7 +9,7 @@ describe Article, :versioning => true do
     article = build(:article, state_id: nil)
     expect(article).to be_invalid
   end
-  it 'starts versioning when a new article is created' do
+  it 'starts versioning with one version when a new article is created' do
     article = FactoryGirl.create(:article)
     expect(article.versions.size).to eq 1
     expect(article.versions[0].event).to eq 'create'

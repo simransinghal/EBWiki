@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
 
   # # returns the mailChimp status of the user
   def mailchimp_status
+    return "subscribed" if (Rails.env.test? && !testing)
     if self.mailchimp_user.kind_of?(Array)
       return nil
     elsif self.mailchimp_user.kind_of?(Hash)

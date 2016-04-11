@@ -57,12 +57,11 @@ gem 'ahoy_matey'
 gem 'split', require: 'split/dashboard'
 
 gem 'rollbar', '~> 2.8.2'
-group :development, :test do
 
+group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'pry-byebug'
-
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -89,6 +88,8 @@ group :development do
 end
 
 group :test do
+  # help with stubbing external requests
+  gem 'webmock'
   gem "faker", "~> 1.4.3"
   # makes it easy to programatically simulate users’ interactions
   gem "capybara", "~> 2.4.3"

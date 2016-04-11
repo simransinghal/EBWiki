@@ -2,6 +2,8 @@ require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
 require File.expand_path('../../config/environment', __FILE__)
 require 'devise'
 require 'rspec/rails'
@@ -56,7 +58,7 @@ RSpec.configure do |config|
 
   # TODO: Explicitly describe the strategies used and the reasons for that
   # below
-  
+
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:transaction)
@@ -66,6 +68,12 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning do
       example.run
     end
+  end
+
+  config.before(:each) do
+    stub_request(:get, /api.github.com/).
+      with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+      to_return(status: 200, body: "stubbed response", headers: {})
   end
 
 
@@ -84,5 +92,5 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  
+
 end

@@ -1,5 +1,5 @@
 class MapsController < ApplicationController
 	def index
-		@articles = Article.all
+		@cases = Case.all
 	end
 end

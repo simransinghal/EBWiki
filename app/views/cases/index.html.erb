@@ -7,7 +7,7 @@ meta title: "EBWiki - Ending Violence Against People of Color",
 <div class="container">
     <div class="row">
         <div class="col-lg-9">
-            <h2 class="page-header">These <%= Article.count %> people were killed by police.<br>We track their cases here.</h2>
+            <h2 class="page-header">These <%= Case.count %> people were killed by police.<br>We track their cases here.</h2>
 
             <div class="text-center">
               <h3>
@@ -29,7 +29,7 @@ meta title: "EBWiki - Ending Violence Against People of Color",
     <!-- Gallery of cases -->
 
         <div id='front-gallery'>
-          <% @articles.each do |article| %>
+          <% @cases.each do |article| %>
             <div class="col-lg-3 col-md-4 col-xs-2">
               <div class="" >
                 <div class="view view-first">
@@ -54,8 +54,8 @@ meta title: "EBWiki - Ending Violence Against People of Color",
             </div>
           <% end %>
         </div>
-        <%= paginate @articles %>
-        <p><%= page_entries_info @articles %></p>
+        <%= paginate @cases %>
+        <p><%= page_entries_info @cases %></p>
       </div>
       <div class="col-md-3">
         <div id='front-sidebar'>
@@ -67,9 +67,9 @@ meta title: "EBWiki - Ending Violence Against People of Color",
               <th>Updated</th>
              </tr>
 
-             <% Article.order(updated_at: :desc).first(10).each do |article| %>
+             <% Case.order(updated_at: :desc).first(10).each do |article| %>
                <tr>
-                 <td><%= Article.order(updated_at: :desc).first(10).index(article) + 1 %></td>
+                 <td><%= Case.order(updated_at: :desc).first(10).index(article) + 1 %></td>
                  <td><%= link_to truncate(article.title, length: 14), article %></td>
                  <td><small><%= article.updated_at.strftime("%m.%e, %l:%M %p") %></small></td>
                </tr>

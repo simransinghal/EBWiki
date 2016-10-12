@@ -13,7 +13,7 @@ class AgenciesController < ApplicationController
   # GET /agencies/1.json
   def show
     @back_url = session[:previous_url]
-    @articles = @agency.articles
+    @cases = @agency.cases
   end
 
   # GET /agencies/new

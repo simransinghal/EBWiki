@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :article_agency do
+  factory :case_agency do
     
   end
 end

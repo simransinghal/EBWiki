@@ -1,4 +1,4 @@
-module ArticlesHelper
+module CasesHelper
   def embed(video_url)
     return '' if video_url.blank?
     if video_url.include? "youtube.com"

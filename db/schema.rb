@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708194753) do
+ActiveRecord::Schema.define(version: 20161012021302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,10 +27,9 @@ ActiveRecord::Schema.define(version: 20160708194753) do
     t.string   "email"
     t.string   "website"
     t.string   "lead_officer"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "slug"
-    t.integer  "follows_count",  default: 0, null: false
   end
 
   create_table "ahoy_events", id: :uuid, default: nil, force: :cascade do |t|
@@ -45,21 +44,21 @@ ActiveRecord::Schema.define(version: 20160708194753) do
   add_index "ahoy_events", ["user_id"], name: "index_ahoy_events_on_user_id", using: :btree
   add_index "ahoy_events", ["visit_id"], name: "index_ahoy_events_on_visit_id", using: :btree
 
-  create_table "article_agencies", force: :cascade do |t|
-    t.integer  "article_id"
+  create_table "case_agencies", force: :cascade do |t|
+    t.integer  "case_id"
     t.integer  "agency_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "article_officers", force: :cascade do |t|
-    t.integer  "article_id"
+  create_table "case_officers", force: :cascade do |t|
+    t.integer  "case_id"
     t.integer  "officer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "articles", force: :cascade do |t|
+  create_table "cases", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
@@ -84,11 +83,10 @@ ActiveRecord::Schema.define(version: 20160708194753) do
     t.boolean  "remove_avatar"
     t.text     "summary"
     t.integer  "follows_count",    default: 0, null: false
-    t.json     "documents"
   end
 
-  add_index "articles", ["slug"], name: "index_articles_on_slug", unique: true, using: :btree
-  add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
+  add_index "cases", ["slug"], name: "index_cases_on_slug", unique: true, using: :btree
+  add_index "cases", ["user_id"], name: "index_cases_on_user_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -106,13 +104,6 @@ ActiveRecord::Schema.define(version: 20160708194753) do
   end
 
   add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-
-  create_table "documents", force: :cascade do |t|
-    t.string   "name"
-    t.string   "attachment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "ethnicities", force: :cascade do |t|
     t.string   "title"
@@ -160,12 +151,12 @@ ActiveRecord::Schema.define(version: 20160708194753) do
 
   create_table "links", force: :cascade do |t|
     t.string   "url"
-    t.integer  "article_id"
+    t.integer  "case_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "links", ["article_id"], name: "index_links_on_article_id", using: :btree
+  add_index "links", ["case_id"], name: "index_links_on_case_id", using: :btree
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
     t.integer "unsubscriber_id"
@@ -248,7 +239,7 @@ ActiveRecord::Schema.define(version: 20160708194753) do
     t.boolean  "veteran"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.integer  "article_id"
+    t.integer  "case_id"
     t.boolean  "homeless"
   end
 
@@ -339,7 +330,7 @@ ActiveRecord::Schema.define(version: 20160708194753) do
 
   add_index "visits", ["user_id"], name: "index_visits_on_user_id", using: :btree
 
-  add_foreign_key "links", "articles"
+  add_foreign_key "links", "cases"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"

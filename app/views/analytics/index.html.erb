@@ -78,17 +78,17 @@
             <th>Updated</th>
            </tr>
 
-           <% Case.order(updated_at: :desc).first(10).each_with_index do |article, i| %>
+           <% Case.order(updated_at: :desc).first(10).each_with_index do |this_case, i| %>
              <tr>
                <td><%= i + 1 %></td>
-               <td><%= link_to truncate(article.title, length: 14), article %></td>
-               <td><small><%= article.updated_at.strftime("%m.%e, %l:%M %p") %></small></td>
+               <td><%= link_to truncate(this_case.title, length: 14), this_case %></td>
+               <td><small><%= this_case.updated_at.strftime("%m.%e, %l:%M %p") %></small></td>
              </tr>
            <% end %>
          </table>
         </div>
         <div class="chart-notes">
-          These are the last ten updated articles
+          These are the last ten updated cases
         </div>
       </div>
     </div>
@@ -107,17 +107,17 @@
             <th>Followers</th>
            </tr>
 
-           <% Case.order(follows_count: :desc).first(10).each_with_index do |article, i| %>
+           <% Case.order(follows_count: :desc).first(10).each_with_index do |this_case, i| %>
              <tr>
                <td><%= i + 1 %></td>
-               <td><%= link_to truncate(article.title, length: 25), article %></td>
-               <td><%= link_to article.follows_count, case_followers_path(article) %></td>
+               <td><%= link_to truncate(this_case.title, length: 25), this_case %></td>
+               <td><%= link_to this_case.follows_count, case_followers_path(this_case) %></td>
              </tr>
            <% end %>
          </table>
         </div>
         <div class="chart-notes">
-          These are the articles with the most followers
+          These are the cases with the most followers
         </div>
       </div>
     </div>
@@ -138,7 +138,7 @@
             <tr>
               <% if Case.find_by_slug(visit[0].split('/').last).present? %>
                 <td><%= i %></td>
-                <td><%= link_to truncate(Case.find_by_slug(visit[0].split('/').last).title, length: 25), article_path(Case.find_by_slug(visit[0].split('/').last)) %></td>
+                <td><%= link_to truncate(Case.find_by_slug(visit[0].split('/').last).title, length: 25), case_path(Case.find_by_slug(visit[0].split('/').last)) %></td>
                 <td><%= visit[1] %></td>
               <% end %>
             </tr>
@@ -164,8 +164,8 @@
           <% Comment.order(created_at: :desc).each do |comment| %>
             <li>
               <blockquote class="blockquote">
-                <p><%= link_to truncate(Case.find(comment.commentable_id).title, length: 30), article_path(Case.find(comment.commentable_id)) %> -- <%= comment.created_at.strftime("%B %d, %Y") %></p>
-                <p><%= link_to truncate(comment.content, length: 100), article_path(Case.find(comment.commentable_id)) %></p>
+                <p><%= link_to truncate(Case.find(comment.commentable_id).title, length: 30), case_path(Case.find(comment.commentable_id)) %> -- <%= comment.created_at.strftime("%B %d, %Y") %></p>
+                <p><%= link_to truncate(comment.content, length: 100), case_path(Case.find(comment.commentable_id)) %></p>
                 <small><%= link_to User.find(comment.user_id).name, user_path(User.find(comment.user_id)) %></small>
               </blockquote>
             </li>
@@ -174,29 +174,5 @@
       </div>
     </div>
   </div>
-
-
-<!--     <div class="row">
-      <div class="col-sm-3">
-        <div class="chart-wrapper">
-          <img data-src="holder.js/100%x150/white">
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="chart-wrapper">
-          <img data-src="holder.js/100%x150/white">
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="chart-wrapper">
-          <img data-src="holder.js/100%x150/white">
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="chart-wrapper">
-          <img data-src="holder.js/100%x150/white">
-        </div>
-      </div>
-    </div> -->
   <p>* mom refers to a comparison of the most recent adjacent 30 day periods, not specific months</p>
 </div>

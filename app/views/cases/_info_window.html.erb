@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-lg-3" style="text-align:center;">
-    <%= image_tag(article.avatar.medium_avatar) %>
+    <%= image_tag(this_case.avatar.medium_avatar) %>
     <br>
-    <%= link_to article.title, article_path(article) %>
+    <%= link_to this_case.title, case_path(this_case) %>
   </div>
   <div class="col-lg-9">
-    <%= truncate(article.overview, length:500) %>
+    <%= truncate(this_case.overview, length:500) %>
   </div>
 </div>

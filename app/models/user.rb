@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   validates :name, presence: { message: "Please add a name." }
 
-  has_many :articles
+  has_many :cases
   has_many :comments
   acts_as_follower
   acts_as_messageable

@@ -29,25 +29,25 @@ meta title: "EBWiki - Ending Violence Against People of Color",
     <!-- Gallery of cases -->
 
         <div id='front-gallery'>
-          <% @cases.each do |article| %>
+          <% @cases.each do |this_case| %>
             <div class="col-lg-3 col-md-4 col-xs-2">
               <div class="" >
                 <div class="view view-first">
-                  <% if article.avatar? %>
-                    <%= link_to image_tag(article.avatar.large_avatar, :class => "img-responsive"), article %>
+                  <% if case.avatar? %>
+                    <%= link_to image_tag(case.avatar.large_avatar, :class => "img-responsive"), this_case %>
                   <% else %>
                     <div class="thumbnail text-center">
-                      <%= link_to image_tag("default-user-icon.png", :class => "img-responsive"), article %>
+                      <%= link_to image_tag("default-user-icon.png", :class => "img-responsive"), this_case %>
                       <div class="caption">
-                        <h4><%= article.subjects.first.name %></h4>
+                        <h4><%= this_case.subjects.first.name %></h4>
                       </div>
                     </div>
                   <% end %>
                   <div class="mask">
-                    <h2><%= link_to article.title, article, :class => "info2" %></h2>
-                    <h5><%= article.date.strftime("%B %d, %Y") %> - <%= article.city %>, <%= article.state.ansi_code %></h5>
-                    <p><%= raw link_to strip_tags(article.overview.truncate(140)), article, :class => "info2" %></p>
-                    <%= link_to 'Read More', article, :class => "info" %>
+                    <h2><%= link_to this_case.title, this_case, :class => "info2" %></h2>
+                    <h5><%= this_case.date.strftime("%B %d, %Y") %> - <%= this_case.city %>, <%= this_case.state.ansi_code %></h5>
+                    <p><%= raw link_to strip_tags(this_case.overview.truncate(140)), this_case, :class => "info2" %></p>
+                    <%= link_to 'Read More', this_case, :class => "info" %>
                   </div>
                 </div>
               </div>
@@ -67,11 +67,11 @@ meta title: "EBWiki - Ending Violence Against People of Color",
               <th>Updated</th>
              </tr>
 
-             <% Case.order(updated_at: :desc).first(10).each do |article| %>
+             <% Case.order(updated_at: :desc).first(10).each do |this_case| %>
                <tr>
-                 <td><%= Case.order(updated_at: :desc).first(10).index(article) + 1 %></td>
-                 <td><%= link_to truncate(article.title, length: 14), article %></td>
-                 <td><small><%= article.updated_at.strftime("%m.%e, %l:%M %p") %></small></td>
+                 <td><%= Case.order(updated_at: :desc).first(10).index(this_case) + 1 %></td>
+                 <td><%= link_to truncate(this_case.title, length: 14), this_case %></td>
+                 <td><small><%= this_case.updated_at.strftime("%m.%e, %l:%M %p") %></small></td>
                </tr>
              <% end %>
            </table>

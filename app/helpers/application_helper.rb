@@ -24,7 +24,7 @@ module ApplicationHelper
     @hash = Gmaps4rails.build_markers(cases.dup) do |this_case, marker|
       marker.lat this_case.latitude
       marker.lng this_case.longitude
-      marker.infowindow controller.render_to_string(:partial => "/cases/info_window", :locals => { :case => this_case})
+      marker.infowindow controller.render_to_string(:partial => "/cases/info_window", :locals => { :this_case => this_case})
     end
     @hash
   end

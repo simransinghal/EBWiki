@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe UserNotifier, type: :mailer do
   describe 'send_update_email' do
     let(:user) { mock_model User, name: 'John', email: 'john@email.com', all_following: [User.new] }
-    let(:article) {mock_model Article, title: 'John Smith', content: 'some content', state_id: 33}
-    let(:mail) { UserNotifier.send_update_email(user,article) }
+    let(:this_case) {mock_model Case, title: 'John Smith', content: 'some content', state_id: 33}
+    let(:mail) { UserNotifier.send_update_email(user,this_case) }
  
     it 'renders the subject' do
       expect(mail.subject).to eql('A new post has been added to EBWiki')
@@ -19,24 +19,24 @@ RSpec.describe UserNotifier, type: :mailer do
     end
  
     it 'includes @title' do
-      expect(mail.body.encoded).to match(article.title)
+      expect(mail.body.encoded).to match(this_case.title)
     end
   end
   
 
   describe 'send_followers_email' do
     let(:follower) { FactoryGirl.create(:user, email: 'follower@gmail.com')}
-    let(:article) { FactoryGirl.create(:article) }
-    let(:author) { FactoryGirl.create(:user, articles: [article])}
-    let(:mail) { UserNotifier.send_followers_email([follower],article) }
+    let(:this_case) { FactoryGirl.create(:case) }
+    let(:author) { FactoryGirl.create(:user, cases: [this_case])}
+    let(:mail) { UserNotifier.send_followers_email([follower],this_case) }
  
     before do
-      allow(article).to receive_message_chain("versions.last.whodunnit").and_return(author.id)
-      allow(article).to receive_message_chain("versions.last.comment").and_return("Comment")
+      allow(this_case).to receive_message_chain("versions.last.whodunnit").and_return(author.id)
+      allow(this_case).to receive_message_chain("versions.last.comment").and_return("Comment")
       allow(Rails.logger).to receive(:info)
     end
     it 'renders the subject' do
-      expect(mail.subject).to eql("The #{article.title} case has been updated on EBWiki.")
+      expect(mail.subject).to eql("The #{this_case.title} case has been updated on EBWiki.")
     end
  
     it 'renders the receiver email' do
@@ -54,7 +54,7 @@ RSpec.describe UserNotifier, type: :mailer do
 
 
   describe 'welcome_email' do
-    let(:user) { mock_model User, name: 'John', email: 'john@email.com', all_following: [Article.new]}
+    let(:user) { mock_model User, name: 'John', email: 'john@email.com', all_following: [Case.new]}
     let(:mail) { UserNotifier.welcome_email(user) }
  
     it 'renders the subject' do

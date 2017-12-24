@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-lg-3" style="text-align:center;">
+    <%= image_tag(case[3]) %>
+    <br>
+    <%= link_to case[4], case_path(id: case[0]) %>
+  </div>
+  <div class="col-lg-9">
+    <%= raw truncate(case[5], length:500) %>
+  </div>
+</div>

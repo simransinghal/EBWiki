@@ -20,7 +20,7 @@ FactoryBot.define do
     password 'password'
     password_confirmation 'password'
     after :create do |_article|
-      user.articles << FactoryBot.create(:article)
+      user.articles << FactoryBot.create(:case)
     end
   end
 end

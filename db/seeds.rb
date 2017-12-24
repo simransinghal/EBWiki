@@ -214,8 +214,8 @@ if User.count.zero?
     end
 end
 
-if Article.count.zero?
-  puts 'Creating Articles...'
+if Case.count.zero?
+  puts 'Creating Cases...'
 
   articles = [
     { title: 'Sven Svensson',
@@ -330,7 +330,7 @@ if Article.count.zero?
   ]
   
   articles.each do |article|
-    Article.create(article)
+    Case.create(article)
   end
 end
 

@@ -16,9 +16,9 @@ RSpec.describe CommentsController, type: :controller do
   #     expect(response).to have_http_status(:success)
   #   end
   # end
-  describe 'Article comments' do
-    let(:article) { FactoryBot.create(:article) }
-    let(:comment) { article.comments.create(content: 'a pithy comment') }
+  describe 'Case comments' do
+    let(:this_case) { FactoryBot.create(:case) }
+    let(:comment) { this_case.comments.create(content: 'a pithy comment') }
     login_user
 
     subject { comment }
@@ -31,17 +31,17 @@ RSpec.describe CommentsController, type: :controller do
 
     it 'creates a new comment with valid attributes' do
       comment_attr = attributes_for(:comment)
-      article = Article.last || create(:article)
+      this_case = Case.last || create(:case)
 
       expect do
-        post :create, comment: comment_attr, article_id: article.id
+        post :create, comment: comment_attr, case_id: this_case.id
       end.to change(Comment, :count).by(1)
     end
 
-    it 'deletes comments when associated Article object is destroyed' do
-      article.save
+    it 'deletes comments when associated Case object is destroyed' do
+      this_case.save
       comment.save
-      article.destroy
+      this_case.destroy
       expect(Comment.all).not_to include comment
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ArticlesHelper
+module CasesHelper
   def embed(video_url)
     return '' if video_url.blank?
     if video_url.include? 'youtube.com'
@@ -14,12 +14,12 @@ module ArticlesHelper
     end
   end
 
-  # This method checks to make sure that the article has the instance variables
+  # This method checks to make sure that the case has the instance variables
   # it needs in order to display the content. Intended to gracefully fail in cases
-  # where an article doesn't have a subject, for example...
+  # where an case doesn't have a subject, for example...
   # TODO: Add the location hash to the list of required data
-  def article_sanity_check
-    (@article.present? &&
+  def case_sanity_check
+    (@case.present? &&
       @commentable.present? &&
       @comment.present? &&
       @subjects.present?)

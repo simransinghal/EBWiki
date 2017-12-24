@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# This is still called "Article", although its true name is "Case"
+# This is still called "Case", although its true name is "Case"
 # TODO: Rename this to Case
 #
-class Article < ActiveRecord::Base
+class Case < ActiveRecord::Base
   # TODO: Clean up relationship section
   belongs_to :user
   belongs_to :category
@@ -15,9 +15,9 @@ class Article < ActiveRecord::Base
   has_many :subjects, dependent: :destroy
   accepts_nested_attributes_for :subjects, reject_if: :all_blank, allow_destroy: true
 
-  has_many :article_agencies, dependent: :destroy
-  has_many :agencies, through: :article_agencies
-  accepts_nested_attributes_for :article_agencies, reject_if: :all_blank, allow_destroy: true
+  has_many :case_agencies, dependent: :destroy
+  has_many :agencies, through: :case_agencies
+  accepts_nested_attributes_for :case_agencies, reject_if: :all_blank, allow_destroy: true
   # Paper Trail
   has_paper_trail ignore: [:summary], meta: { comment: :edit_summary }
 
@@ -96,26 +96,26 @@ class Article < ActiveRecord::Base
   end
 
   def mom_new_cases_growth
-    last_month_cases = Article.property_count_over_time('date', 30)
-    last_60_days_cases = Article.property_count_over_time('date', 60)
+    last_month_cases = Case.property_count_over_time('date', 30)
+    last_60_days_cases = Case.property_count_over_time('date', 60)
     prior_30_days_cases = last_60_days_cases - last_month_cases
 
     (((last_month_cases.to_f / prior_30_days_cases) - 1) * 100).round(2)
   end
 
   def mom_cases_growth
-    last_month_cases = Article.property_count_over_time('created_at', 30)
+    last_month_cases = Case.property_count_over_time('created_at', 30)
 
-    (last_month_cases.to_f / (Article.count - last_month_cases) * 100).round(2)
+    (last_month_cases.to_f / (Case.count - last_month_cases) * 100).round(2)
   end
 
   def cases_updated_last_30_days
-    Article.property_count_over_time('updated_at', 30)
+    Case.property_count_over_time('updated_at', 30)
   end
 
   def mom_growth_in_case_updates
-    last_month_case_updates = Article.property_count_over_time('updated_at', 30)
-    last_60_days_case_updates = Article.property_count_over_time('updated_at', 60)
+    last_month_case_updates = Case.property_count_over_time('updated_at', 30)
+    last_60_days_case_updates = Case.property_count_over_time('updated_at', 60)
     prior_30_days_case_updates = last_60_days_case_updates - last_month_case_updates
 
     (((last_month_case_updates.to_f / prior_30_days_case_updates) - 1) * 100).round(2)

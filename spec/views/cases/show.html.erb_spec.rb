@@ -2,21 +2,21 @@
 
 require 'rails_helper'
 
-RSpec.describe 'articles/show.html.erb', type: :view do
+RSpec.describe 'cases/show.html.erb', type: :view do
   before do
     controller.singleton_class.class_eval do
       protected
 
         def marker_locations_for(_articles)
-          [Article.all]
+          [Case.all]
         end
         helper_method :marker_locations_for
     end
   end
   describe 'on success' do
     it 'should not display a content field' do
-      article = FactoryBot.create(:article)
-      assign(:article, article)
+      article = FactoryBot.create(:case)
+      assign(:case, article)
       assign(:commentable, article)
       assign(:comments, article.comments)
       assign(:comment, Comment.new)
@@ -26,9 +26,9 @@ RSpec.describe 'articles/show.html.erb', type: :view do
     end
 
     it 'displays litigation subheader if litigation text field is present' do
-      article = FactoryBot.create(:article, litigation: 'Legal Action')
+      article = FactoryBot.create(:case, litigation: 'Legal Action')
 
-      assign(:article, article)
+      assign(:case, article)
       assign(:commentable, article)
       assign(:comments, article.comments)
       assign(:comment, Comment.new)
@@ -38,9 +38,9 @@ RSpec.describe 'articles/show.html.erb', type: :view do
     end
 
     it 'displays summary subheader if overview text field is present' do
-      article = FactoryBot.create(:article, overview: 'overview text')
+      article = FactoryBot.create(:case, overview: 'overview text')
 
-      assign(:article, article)
+      assign(:case, article)
       assign(:commentable, article)
       assign(:comments, article.comments)
       assign(:comment, Comment.new)
@@ -50,9 +50,9 @@ RSpec.describe 'articles/show.html.erb', type: :view do
     end
 
     it 'displays community action subheader if overview text field is present' do
-      article = FactoryBot.create(:article, community_action: 'community text')
+      article = FactoryBot.create(:case, community_action: 'community text')
 
-      assign(:article, article)
+      assign(:case, article)
       assign(:commentable, article)
       assign(:comments, article.comments)
       assign(:comment, Comment.new)

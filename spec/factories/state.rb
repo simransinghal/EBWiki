@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This will guess the Article class
+# This will guess the Case class
 FactoryBot.define do
   sequence(:id)
 

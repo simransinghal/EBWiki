@@ -160,3 +160,6 @@ gem 'httparty'
 gem 'rack-host-redirect'
 
 gem 'rubocop', require: false
+
+gem 'squasher', '>= 0.6.0'
+

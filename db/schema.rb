@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171223231545) do
+ActiveRecord::Schema.define(version: 20171225082527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,41 @@ ActiveRecord::Schema.define(version: 20171223231545) do
   add_index "ahoy_events", ["time"], name: "index_ahoy_events_on_time", using: :btree
   add_index "ahoy_events", ["user_id"], name: "index_ahoy_events_on_user_id", using: :btree
   add_index "ahoy_events", ["visit_id"], name: "index_ahoy_events_on_visit_id", using: :btree
+
+  create_table "article_documents", force: :cascade do |t|
+    t.integer  "article_id"
+    t.integer  "document_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "articles", id: false, force: :cascade do |t|
+    t.integer  "id",               default: "nextval('articles_id_seq'::regclass)", null: false
+    t.string   "title"
+    t.datetime "created_at",                                                        null: false
+    t.datetime "updated_at",                                                        null: false
+    t.integer  "user_id"
+    t.integer  "category_id"
+    t.date     "date"
+    t.integer  "state_id"
+    t.string   "city"
+    t.string   "address"
+    t.string   "zipcode"
+    t.float    "longitude"
+    t.float    "latitude"
+    t.string   "avatar"
+    t.string   "slug"
+    t.string   "video_url"
+    t.string   "state"
+    t.integer  "age"
+    t.text     "overview"
+    t.text     "community_action"
+    t.text     "litigation"
+    t.string   "country"
+    t.boolean  "remove_avatar"
+    t.text     "summary"
+    t.integer  "follows_count",    default: 0,                                      null: false
+  end
 
   create_table "case_agencies", force: :cascade do |t|
     t.integer  "case_id"
@@ -96,8 +131,39 @@ ActiveRecord::Schema.define(version: 20171223231545) do
     t.string   "default_avatar_url"
   end
 
-  add_index "cases", ["slug"], name: "index_cases_on_slug", unique: true, using: :btree
-  add_index "cases", ["user_id"], name: "index_cases_on_user_id", using: :btree
+  add_index "cases", ["slug"], name: "index_articles_on_slug", unique: true, using: :btree
+  add_index "cases", ["user_id"], name: "index_articles_on_user_id", using: :btree
+
+  create_table "cases_backup", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "user_id"
+    t.integer  "category_id"
+    t.date     "date"
+    t.integer  "state_id"
+    t.string   "city"
+    t.string   "address"
+    t.string   "zipcode"
+    t.float    "longitude"
+    t.float    "latitude"
+    t.string   "avatar"
+    t.string   "slug"
+    t.string   "video_url"
+    t.string   "state"
+    t.integer  "age"
+    t.text     "overview"
+    t.text     "community_action"
+    t.text     "litigation"
+    t.string   "country"
+    t.boolean  "remove_avatar"
+    t.text     "summary"
+    t.integer  "follows_count",      default: 0, null: false
+    t.string   "default_avatar_url"
+  end
+
+  add_index "cases_backup", ["slug"], name: "index_cases_on_slug", unique: true, using: :btree
+  add_index "cases_backup", ["user_id"], name: "index_cases_on_user_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -348,7 +414,7 @@ ActiveRecord::Schema.define(version: 20171223231545) do
 
   add_index "visits", ["user_id"], name: "index_visits_on_user_id", using: :btree
 
-  add_foreign_key "links", "cases"
+  add_foreign_key "links", "cases_backup", column: "case_id"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"

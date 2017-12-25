@@ -52,8 +52,8 @@ class Case < ActiveRecord::Base
     art.address_changed? || art.city_changed? || art.state_id_changed? || art.zipcode_changed?
   } # auto-fetch coordinates
 
-  before_save :set_default_avatar_url if proc do |art|
-    art.avatar.changed?
+  before_save :set_default_avatar_url if proc do |this_case|
+    this_case.avatar.changed?
   end
   # Scopes
   scope :this_month, -> { where(created_at: 1.month.ago.beginning_of_day..Date.today.end_of_day) }

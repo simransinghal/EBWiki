@@ -33,7 +33,7 @@ class Case < ActiveRecord::Base
 
   # Model Validations
   validates :date, presence: { message: 'Please add a date.' }
-  validate :article_date_cannot_be_in_the_future
+  validate :case_date_cannot_be_in_the_future
   validates :city, presence: { message: 'Please add a city.' }
   validates :state_id, presence: { message: 'Please specify the state where this incident occurred before saving.' }
   validates :title, presence: { message: 'Please specify a title' }
@@ -75,7 +75,7 @@ class Case < ActiveRecord::Base
     try(:nearbys, 50).try(:order, 'distance')
   end
 
-  def article_date_cannot_be_in_the_future
+  def case_date_cannot_be_in_the_future
     if date.present? && date > Date.today
       errors.add(:date, 'must be in the past')
     end

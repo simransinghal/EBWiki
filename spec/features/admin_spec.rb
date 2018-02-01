@@ -73,8 +73,6 @@ describe User do
       click_button 'Log in'
       visit rails_admin.dashboard_path
       expect(page).to have_content 'Site Administration'
-      visit split_dashboard_path
-      expect(page).to have_content 'Split Dashboard'
       WebMock.disable_net_connect!
     end
 
